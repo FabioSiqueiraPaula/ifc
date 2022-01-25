@@ -86,16 +86,16 @@ else
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="text-transform: uppercase;">
   <a class="navbar-brand" href="#">Menu</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <a class="nav-item nav-link active" data-toggle="modal" data-target="#partidaModal" href="#">Lançamento Partida <span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link" data-toggle="modal" data-target="#jogadorModal" href="#">Cadastro Jogadores</a>      
-      <a class="nav-item nav-link" href="#">Ranking de Jogadores</a>
+      <a class="nav-item nav-link active" data-toggle="modal" data-target="#partidaModal" href="#">cadastro de Partida <span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link active" data-toggle="modal" data-target="#jogadorModal" href="#">Cadastro Jogadores</a>      
+      <a class="nav-item nav-link active" href="#">Ranking de Jogadores</a>
     </div>
   </div>
 </nav>
