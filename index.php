@@ -16,10 +16,20 @@ else
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
-<script src="./js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <script src="./js/bootstrap.min.js"></script>   
+
     <title>SIS IFC</title>
+
+    <script language="JavaScript">    
+        function MM_openBrWindow(theUrl, winName, features) {
+        window.open(theUrl, winName, features);
+        }
+    </script>
+
 </head>
 <body>
     <?php
@@ -68,7 +78,7 @@ else
                     </thead>
                 </table>
                 
-                <table class="table table-success table-striped" style="text-transform: uppercase; border: #005B5B;" border="1">
+                <table class="table table-success table-striped" style="text-transform: uppercase; border: #005B5B; font-size:16px; font-weight:bold;" border="1">
                     <thead>
                         <tr style="text-align: center;">
                             <td colspan="2"></td>                            
@@ -111,8 +121,9 @@ else
                           </svg>' 
                         ?>
                         </td>
-                        <td>escalar</td>
-                        <td>Detalhe</td>
+                        <td>
+                            <a href="javascript:void(0)" onClick="MM_openBrWindow('escala_jogador.php?id=<?= $item['partidaId']; ?>','','scrollbars=no, width=auto, height=500, left=0, top=0')"> escalar</a></td>
+                        <td><a href="javascript:void(0)" onClick="MM_openBrWindow('detalhe_escalacao.php?id=<?= $item['partidaId']; ?>','','scrollbars=no, width=auto, height=500, left=0, top=0')">SUMULA</a></td>
                     </tr>
                     <?php } ?>
                 </table>
