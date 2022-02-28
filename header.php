@@ -1,169 +1,91 @@
 <?php
-include_once("./functions/init.php");
-include_once("./functions/function.php");
-
-
-if (isset($_POST['acao']) && $_POST['acao'] == 'cad_jogador') {
-    $jogadorNome = $_POST['jogadorNome'];
- 	
-    try {
-        $sqlInsert = "INSERT INTO jogador (jogadorNome)
-                       VALUES (:jogadorNome)";
-    
-         $statement = $PDO->prepare($sqlInsert);
-         $statement->execute(array(':jogadorNome' => $jogadorNome  ));
-    
-         if ($statement ->rowCount() == 1){
-    
-             $result = "<p style='color:green;'>Cadastrado com Sucesso</p>";
-    
-         }
-       
-        }
-        catch(PDOException $e)
-        {
-            $result = "<p style='color:green;'>Erro no Cadastro: " . $e->getMessage() . "</p>";
-
-    exit;
-    }
-}
-
-if (isset($_POST['acao']) && $_POST['acao'] == 'cad_partida') {
-    $data = $_POST['data'];
-    $juiz = $_POST['juiz'];
-    $golAzul = $_POST['golAzul'];
-    $golBranco = $_POST['golBranco'];
-
-    $t = explode("/", $data);
-    $dia = $t[0];
-    $mes = $t[1];
-    $ano = $t[2];
-
-    
- 	
-    try {
-        $sqlInsert = "INSERT INTO partida (dia,mes,ano,juiz,golAzul,golBranco)
-                       VALUES (:dia,:mes,:ano,:juiz,:golAzul,:golBranco)";
-    
-         $statement = $PDO->prepare($sqlInsert);
-         $statement->execute(array(':dia' => $dia, ':mes' => $mes, ':ano' => $ano, ':juiz' => $juiz, ':golAzul' => $golAzul, 'golBranco' => $golBranco  ));
-    
-         if ($statement ->rowCount() == 1){
-    
-             $result = print "<p style='color:green;'>Cadastrado com Sucesso</p>";
-    
-         }
-       
-        }
-        catch(PDOException $e)
-        {
-            $result = print "<p style='color:green;'>Erro no Cadastro: " . $e->getMessage() . "</p>";
-
-    exit;
-    }
-}
-
-if (isset($_GET['mes']))
-    $mes_hoje = $_GET['mes'];
-else
-    $mes_hoje = date('m');
-
-if (isset($_GET['ano']))
-    $ano_hoje = $_GET['ano'];
-else
-    $ano_hoje = date('Y');
-
+require_once("./functions/init.php");
+require_once("./functions/function.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>SIS IFC</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  
+
   <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/style.css">
   <script src="./js/bootstrap.min.js"></script>
 
 </head>
+
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light" style="text-transform: uppercase;">
-  <a class="navbar-brand" href="#">Menu</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link active" data-toggle="modal" data-target="#partidaModal" href="#">cadastro de Partida <span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link active" data-toggle="modal" data-target="#jogadorModal" href="#">Cadastro Jogadores</a>      
-      <a class="nav-item nav-link active" href="#">Ranking de Jogadores</a>
-    </div>
-  </div>
-</nav>
+  <div class="slider">
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" 
+    style="background-image: -ms-linear-gradient(top, #00510F 0%, #17882C 100%);
+           background-image: -moz-linear-gradient(top, #00510F 0%, #17882C 100%);
+           background-image: -o-linear-gradient(top, #00510F 0%, #17882C 100%);
+           background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #00510F), color-stop(100, #17882C));
+           background-image: -webkit-linear-gradient(top, #00510F 0%, #17882C 100%);
+           background-image: linear-gradient(to bottom, #00510F 0%, #17882C 100%);
+           color: #fff;">
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner" role="listbox">
+        <div class="item active">
+          <img src="./img/brasao_f.png" id="img">
+        </div>
+      </div>
 
-<div class="modal fade" id="jogadorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document" style="text-transform: uppercase;">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Cadastro Jogador</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form method="post">
-        <input type="hidden" name="acao" value="cad_jogador" />
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Nome:</label>
-            <input type="text" class="form-control" id="jogadorNome" name="jogadorNome">
-          </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-        <button type="submit" value="Cadastrar" name="submit" class="btn btn-primary">Cadastrar</button>
-      </div>
-      </form>
+      <!-- Controls -->
+      <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+        <span class="fa fa-angle-right" aria-hidden="true"></span>
+        <span>sis controle de sumula</span>
+      </a>
     </div>
   </div>
+  <!--slider-->
+  <hr />
+
+  <?php
+
+  session_start();
+
+  require_once "login.php";
+
+  if (isset($_GET['logout'])) :
+    if ($_GET['logout'] == 'ok') :
+      Login::deslogar();
+    endif;
+  endif;
+
+  if (isset($_SESSION['logado'])) :
+
+  ?>
+
+    <div style="max-height: 30px;
+                color: #fff;
+                background-color: #00420c;
+                margin-bottom: 30px;">
+
+      <!--informo o campo que utilizarei para mostra quem se encontra logado-->
+      BEM VINDO <?php echo $_SESSION['usuario']; ?>
+
+      <br />
+      <a href="index.php?logout=ok">Sair do Sistema</a>
+
+    <?php
+
+  else :
+    echo "Você não esta logado ou Não tem acesso tente novamente"; ?>
+
+      <a href="http://localhost:82/sisifc/">Inicio</a>
+    <?php
+  endif;
+    ?>
 </div>
 
-<div class="modal fade" id="partidaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document" style="text-transform: uppercase;">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Cadastro de Partida</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form method="post">
-        <input type="hidden" name="acao" value="cad_partida" />
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Data:</label>            
-            <input type="text" class="form-control" id="data" name="data" value="<?php echo date('d') ?>/<?php echo $mes_hoje ?>/<?php echo $ano_hoje ?>">
-          </div>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Juiz:</label>
-            <input type="text" class="form-control" id="juiz" name="juiz">
-          </div>
-          <div class="form-group">            
-            <label for="recipient-name" class="col-form-label">Gols Time Azul:</label>
-            <input type="text" class="form-control" id="golAzul" name="golAzul">
-            <label for="recipient-name" class="col-form-label">Gols Time Branco:</label>
-            <input type="text" class="form-control" id="golBranco" name="golBranco">
-          </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-        <button type="submit" value="Cadastrar" name="submit" class="btn btn-primary">Cadastrar</button>
-      </div>
-      </form>
-    </div>
-  </div>
-</div>
+    <?php require_once("./menu.php"); ?>
+    
+</body>
 
- </body>
 </html>

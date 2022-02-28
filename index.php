@@ -1,131 +1,86 @@
 <?php
 
-if (isset($_GET['mes']))
-    $mes_hoje = $_GET['mes'];
-else
-    $mes_hoje = date('m');
+session_start();
+require_once "./functions/init.php";
+require_once "login.php";
 
-if (isset($_GET['ano']))
-    $ano_hoje = $_GET['ano'];
-else
-    $ano_hoje = date('Y');
+if (isset($_POST['ok'])) :
+
+    $login = filter_input(INPUT_POST, "login");
+    $senha = filter_input(INPUT_POST, "senha");
+
+    /**/
+    $_1 = new Login;
+    $_1->setLogin($login);
+    $_1->SetSenha($senha);
+
+    if ($_1->logar()) :
+        header("Location: index_logado.php");
+    else :
+        $erro = "Erro ao Logar";
+    endif;
+
+endif;
 
 ?>
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
 <head>
+    <!--Utilizei o boostrap para deixar com uma aparencia melhor ao projeto-->
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
-  <link rel="stylesheet" href="./css/bootstrap.min.css">
-  <script src="./js/bootstrap.min.js"></script>   
+    <title>Login Sistema</title>
+    <!--se preferir add um css para caso queira utiliza-lo em vez do boostrap-->
+    <link rel="stylesheet" type="text/css" href="css/tela_login.css" />
 
-    <title>SIS IFC</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-    <script language="JavaScript">    
-        function MM_openBrWindow(theUrl, winName, features) {
-        window.open(theUrl, winName, features);
-        }
-    </script>
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 </head>
-<body>
-    <?php
-        require 'header.php';
-    ?>
- <table cellpadding="1" cellspacing="10"  width="100%" align="center" style="background-color:#033" class="table">
-                <thead>
-                    <tr>
-                        <th colspan="11" style="background-color:#005B5B;">
-                            <h2 style="color:#FFF; margin:5px">Jogos do Mês</h2>
-                        </th>
-                        <th colspan="2" align="right" style="background-color:#005B5B;">
-                            <a style="color:#FFF" href="?mes=<?php echo date('m') ?>&ano=<?php echo date('Y') ?>">Hoje:<strong> <?php echo date('d') ?> de <?php echo mostraMes(date('m')) ?> de <?php echo date('Y') ?></strong></a>&nbsp; 
-                        </th>
-                    </tr>
 
-                    <tr>
-                        <th width="70">
-                            <select onchange="location.replace('?mes=<?php echo $mes_hoje ?>&ano=' + this.value)">
-                                <?php
-                                for ($i = 2022; $i <= 2032; $i++) {
-                                    ?>
-                                    <option value="<?php echo $i ?>" <?php if ($i == $ano_hoje) echo "selected=selected" ?> ><?php echo $i ?></option>
-                                <?php } ?>
-                            </select>
-                        </th>
+<body style="background-image: url(./img/soccerbg3.jpg); 
+  background-color: #cccccc;
+  height: 500px; 
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-size: cover; ">
+    <div class="container" style="margin-top:30px">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><strong>Acesso ao Sistema </strong></h3>
+                    <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#"></a></div>
+                </div>
 
-                        <?php
-                        for ($i = 1; $i <= 12; $i++) {
-                            ?>
-                            <th align="center" style="<?php if ($i != 12) echo "border-right:1px solid #FFF;" ?> padding-right:5px">
-                                <a href="?mes=<?php echo $i ?>&ano=<?php echo $ano_hoje ?>" style="
-                                <?php if ($mes_hoje == $i) { ?>    
-                                       color:#033; font-size:16px; font-weight:bold; background-color:#FFF; padding:5px
-                                   <?php } else { ?>
-                                       color:#FFF; font-size:16px;
-                                   <?php } ?>
-                                   ">
-                                       <?php echo mostraMes($i); ?>
-                                </a>
-                            </th>
-                            <?php
-                        }
-                        ?>
-                    </tr>
-                    </thead>
-                </table>
-                
-                <table class="table table-success table-striped" style="text-transform: uppercase; border: #005B5B; font-size:16px; font-weight:bold;" border="1">
-                    <thead>
-                        <tr style="text-align: center;">
-                            <td colspan="2"></td>                            
-                            <td colspan="2" style="background-color: #033; color: #FFF;">placar</td>
-                            <td colspan="2"></td>
-                        </tr>
-                        <tr style="text-align: center;">
-                            <th scope="col" style="text-align: center;">Dia</th>
-                            <th scope="col">Juiz</th>
-                            <th scope="col" style="background-color: blue; color: #FFF;">Gols Time azul</th>
-                            <th scope="col" style="background-color: white;"> Gols Time Branco</th>
-                            <th scope="col">escalar Jogadores</th>  
-                            <th>detalhe da partida</th>                          
-                        </tr>
-                    </thead>
-                    <?php
-                    $consulta =  $PDO->query("SELECT * FROM partida WHERE mes='$mes_hoje' && ano='$ano_hoje' ORDER By dia");
-                    $resultado = $consulta->fetchAll(PDO::FETCH_ASSOC);
+                <div class="panel-body" id="login">
+                    <form action="" method="POST" id="form-login" role="form">
+                        <div style="margin-bottom: 12px" class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input id="login-username" type="text" class="input" name="login" value="" placeholder="E-mail">
+                        </div>
 
-                    foreach($resultado as $item){                                            
-                    ?>
-                    <tr style="text-align: center;">
-                        <th scope="row"><?= $item['dia']; ?></th>
-                        <td><?= $item['juiz']; ?></td>                        
-                        <td>
-                        <?= $item['golAzul']; echo '<br />';
-                            if($item['golAzul'] > $item['golBranco'])
-                                echo '<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-award-fill" viewBox="0 0 16 16">
-                                <path d="m8 0 1.669.864 1.858.282.842 1.68 1.337 1.32L13.4 6l.306 1.854-1.337 1.32-.842 1.68-1.858.282L8 12l-1.669-.864-1.858-.282-.842-1.68-1.337-1.32L2.6 6l-.306-1.854 1.337-1.32.842-1.68L6.331.864 8 0z"/>
-                                <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/>
-                              </svg>' 
-                        ?>
-                        </td>
-                        <td>
-                        <?= $item['golBranco']; echo '<br />';
-                            if($item['golAzul'] < $item['golBranco'])
-                            echo '<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-award-fill" viewBox="0 0 16 16">
-                            <path d="m8 0 1.669.864 1.858.282.842 1.68 1.337 1.32L13.4 6l.306 1.854-1.337 1.32-.842 1.68-1.858.282L8 12l-1.669-.864-1.858-.282-.842-1.68-1.337-1.32L2.6 6l-.306-1.854 1.337-1.32.842-1.68L6.331.864 8 0z"/>
-                            <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/>
-                          </svg>' 
-                        ?>
-                        </td>
-                        <td>
-                            <a href="javascript:void(0)" onClick="MM_openBrWindow('escala_jogador.php?id=<?= $item['partidaId']; ?>','','scrollbars=no, width=auto, height=500, left=0, top=0')"> escalar</a></td>
-                        <td><a href="javascript:void(0)" onClick="MM_openBrWindow('detalhe_escalacao.php?id=<?= $item['partidaId']; ?>','','scrollbars=no, width=auto, height=500, left=0, top=0')">SUMULA</a></td>
-                    </tr>
-                    <?php } ?>
-                </table>
+                        <div style="margin-bottom: 12px" class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input id="login-password" type="password" class="form-control" name="senha" placeholder="password">
+                        </div>
+
+                        <button type="submit" name="ok" id="btn_logar" value="logar" class="input_button"">Logar</button>
+
+                        <hr style=" margin-top:10px;margin-bottom:10px;">
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>

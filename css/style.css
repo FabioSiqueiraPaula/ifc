@@ -1,0 +1,55 @@
+body { 
+
+  background-image:
+  
+  url("./img/soccerbg3.jpg");
+
+  background-color: #cccccc;
+  height: 500px; 
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-size: cover; 
+
+
+/* Global values */
+background-image: inherit;
+background-image: initial;
+background-image: revert;
+background-image: unset;
+  
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 5px;
+}
+
+#header-img {
+  border-radius: 50%;
+}
+
+#menu-header {
+  max-height: 30px;
+  color: #fff;
+  background-color: #00420c;
+  margin-bottom: 30px;
+  font-size: 12px;
+}
+
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+
+.button1 {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
